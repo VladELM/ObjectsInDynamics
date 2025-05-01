@@ -7,12 +7,10 @@ public class CubePool : MonoBehaviour
     [SerializeField] private int _maxPoolSize = 20;
 
     private Queue<Cube> _cubesPool;
-    private List<Cube> _activeCubes;
 
     private void Awake()
     {
         _cubesPool = new Queue<Cube>();
-        _activeCubes = new List<Cube>();
 
         for (int i = 0; i < _maxPoolSize; i++)
         {
@@ -32,8 +30,6 @@ public class CubePool : MonoBehaviour
 
             if (cube.TryGetComponent(out Cube component))
                 component.Counted += GiveBackCube;
-
-            _activeCubes.Add(cube);
         }
     }
 
@@ -44,7 +40,6 @@ public class CubePool : MonoBehaviour
         if (cube.TryGetComponent(out Cube component))
             component.Counted -= GiveBackCube;
 
-        _activeCubes.Remove(cube);
         _cubesPool.Enqueue(cube);
     }
 }
