@@ -1,4 +1,4 @@
-using Random = System.Random;
+using static UnityEngine.Random;
 using System;
 using UnityEngine;
 using System.Collections;
@@ -18,23 +18,28 @@ public class Cube : MonoBehaviour
     private Coroutine _coroutine;
     private Renderer _renderer;
     private Rigidbody _rigidbody;
-    private Random _random;
     private bool _isTouched;
 
-    public event Action<Cube> Counted;
-
-    private void OnEnable()
-    {
-        _random = new Random();
-        _renderer = GetComponent<Renderer>();
-        _rigidbody = GetComponent<Rigidbody>();
-    }
+    public event Action<Cube> Timed;
 
     private void Awake()
     {
         _renderer = GetComponent<Renderer>();
-        _random = new Random();
+        _rigidbody = GetComponent<Rigidbody>();
         _isTouched = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (_isTouched == false)
+        {
+            if (collision.gameObject.TryGetComponent(out Platform component))
+            {
+                _renderer.material = _collisionMaterial;
+                int lifeTime = Range(_minLifeTime, _maxLifeTime + 1);
+                _coroutine = StartCoroutine(Reducing(lifeTime));
+            }
+        }
     }
 
     public void Initialize(Vector3 position)
@@ -49,28 +54,10 @@ public class Cube : MonoBehaviour
         _isTouched = false;
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (_isTouched == false)
-        {
-            if (collision.gameObject.TryGetComponent(out Platform component))
-            {
-                SetCollidedParameters(out int lifeTime);
-                _coroutine = StartCoroutine(Reducing(lifeTime));
-            }
-        }
-    }
-
-    private void SetCollidedParameters(out int lifeTime)
-    {
-        _renderer.material = _collisionMaterial;
-        lifeTime = _random.Next(_minLifeTime, _maxLifeTime + 1);
-    }
-
     private IEnumerator Reducing(int lifeTime)
     {
         yield return new WaitForSeconds(lifeTime);
 
-        Counted.Invoke(this);
+        Timed.Invoke(this);
     }
 }

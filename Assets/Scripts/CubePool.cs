@@ -29,17 +29,14 @@ public class CubePool : MonoBehaviour
             cube.Initialize(position);
 
             if (cube.TryGetComponent(out Cube component))
-                component.Counted += GiveBackCube;
+                component.Timed += GiveBackCube;
         }
     }
 
     private void GiveBackCube(Cube cube)
     {
         cube.gameObject.SetActive(false);
-
-        if (cube.TryGetComponent(out Cube component))
-            component.Counted -= GiveBackCube;
-
+        cube.Timed -= GiveBackCube;
         _cubesPool.Enqueue(cube);
     }
 }

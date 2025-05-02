@@ -1,4 +1,4 @@
-using Random = System.Random;
+using static UnityEngine.Random;
 using UnityEngine;
 using System.Collections;
 
@@ -11,13 +11,7 @@ public class CubeSpawner : MonoBehaviour
     [SerializeField] private int _maxHeight;
     [SerializeField] private int _delay;
 
-    private Random _random;
     private Coroutine _coroutine;
-
-    private void Awake()
-    {
-        _random = new Random();
-    }
 
     private void Start()
     {
@@ -26,9 +20,9 @@ public class CubeSpawner : MonoBehaviour
 
     private Vector3 GetPosition()
     {
-        return new Vector3(_random.Next(_minCoordinate, _maxCoordinate + 1),
-                                        _random.Next(_minHeight, _maxHeight + 1),
-                                        _random.Next(_minCoordinate, _maxCoordinate + 1));
+        return new Vector3(Range(_minCoordinate, _maxCoordinate + 1),
+                            Range(_minHeight, _maxHeight + 1),
+                            Range(_minCoordinate, _maxCoordinate + 1));
     }
 
     private IEnumerator Spawning()
