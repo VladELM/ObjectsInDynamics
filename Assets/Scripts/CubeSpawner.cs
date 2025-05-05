@@ -36,18 +36,6 @@ public class CubeSpawner : MonoBehaviour
                             Range(_minCoordinate, _maxCoordinate + 1));
     }
 
-    private IEnumerator Spawning()
-    {
-        WaitForSeconds interval = new WaitForSeconds(_delay);
-
-        while (enabled)
-        {
-            yield return interval;
-
-            GetCube(GetRandomPosition());
-        }
-    }
-
     public void GetCube(Vector3 position)
     {
         if (_cubesPool.Count > 0)
@@ -66,5 +54,17 @@ public class CubeSpawner : MonoBehaviour
         cube.gameObject.SetActive(false);
         cube.TimeCounted -= GiveBackCube;
         _cubesPool.Enqueue(cube);
+    }
+
+    private IEnumerator Spawning()
+    {
+        WaitForSeconds interval = new WaitForSeconds(_delay);
+
+        while (enabled)
+        {
+            yield return interval;
+
+            GetCube(GetRandomPosition());
+        }
     }
 }
