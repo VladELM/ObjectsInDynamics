@@ -15,12 +15,11 @@ public class Cube : MonoBehaviour
     [SerializeField] private Material _defaultMaterial;
     [SerializeField] private Material _collisionMaterial;
 
-    private Coroutine _coroutine;
     private Renderer _renderer;
     private Rigidbody _rigidbody;
     private bool _isTouched;
 
-    public event Action<Cube> Timed;
+    public event Action<Cube> TimeCounted;
 
     private void Awake()
     {
@@ -37,7 +36,7 @@ public class Cube : MonoBehaviour
             {
                 _renderer.material = _collisionMaterial;
                 int lifeTime = Range(_minLifeTime, _maxLifeTime + 1);
-                _coroutine = StartCoroutine(Reducing(lifeTime));
+                StartCoroutine(TimeCounting(lifeTime));
             }
         }
     }
@@ -54,10 +53,10 @@ public class Cube : MonoBehaviour
         _isTouched = false;
     }
 
-    private IEnumerator Reducing(int lifeTime)
+    private IEnumerator TimeCounting(int lifeTime)
     {
         yield return new WaitForSeconds(lifeTime);
 
-        Timed.Invoke(this);
+        TimeCounted.Invoke(this);
     }
 }

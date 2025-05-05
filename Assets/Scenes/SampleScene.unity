@@ -437,7 +437,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1008635936}
-  - component: {fileID: 1008635938}
   - component: {fileID: 1008635937}
   m_Layer: 0
   m_Name: Spawner
@@ -473,26 +472,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faa29b2914ec4554d84f0803afef7ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cubePool: {fileID: 1008635938}
+  _cubePrefab: {fileID: 1199390469222364055, guid: 7595e42407780964e8fe4f6ac97f250c, type: 3}
+  _maxPoolSize: 20
   _minCoordinate: 0
   _maxCoordinate: 5
   _minHeight: 15
   _maxHeight: 20
   _delay: 1
---- !u!114 &1008635938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1008635934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 224042242b0f48e45bdb9f8aef701286, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cubePrefab: {fileID: 1199390469222364055, guid: 7595e42407780964e8fe4f6ac97f250c, type: 3}
-  _maxPoolSize: 20
 --- !u!1 &1437213973
 GameObject:
   m_ObjectHideFlags: 0
